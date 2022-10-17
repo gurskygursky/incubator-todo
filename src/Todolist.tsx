@@ -6,16 +6,23 @@ export type TaskType = {
     isDone: boolean;
 }
 
+export type TasksFilterType = 'All' | 'Active' | 'Completed';
+
 type PropsType = {
     title: string;
     tasks: Array<TaskType>;
     removeTask: (taskID: number) => void;
+    changeTaskFilter: (tasksFilterValue: TasksFilterType ) => void;
 }
 
 export const Todolist = (props: PropsType) => {
 
     const removeTask = (taskID: number) => {
         props.removeTask(taskID);
+    }
+
+    const onClickChangeFilter = (tasksFilterValue: TasksFilterType) => {
+        props.changeTaskFilter(tasksFilterValue);
     }
 
     return (
@@ -41,9 +48,9 @@ export const Todolist = (props: PropsType) => {
             {/*    <li><input type="checkbox" checked={props.tasks[2].isDone}/> <span>{props.tasks[2].title}</span></li>*/}
             {/*</ul>*/}
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => onClickChangeFilter('All')}>All</button>
+                <button onClick={() => onClickChangeFilter('Active')}>Active</button>
+                <button onClick={() => onClickChangeFilter('Completed')}>Completed</button>
             </div>
         </div>
     );
