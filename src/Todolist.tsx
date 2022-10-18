@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 
 export type TaskType = {
     id: number;
@@ -13,6 +13,7 @@ type PropsType = {
     tasks: Array<TaskType>;
     removeTask: (taskID: number) => void;
     changeTaskFilter: (tasksFilterValue: TasksFilterType ) => void;
+    changeTaskStatus: (taskID: number, isDone: boolean) => void;
 }
 
 export const Todolist = (props: PropsType) => {
@@ -23,6 +24,10 @@ export const Todolist = (props: PropsType) => {
 
     const onClickChangeFilter = (tasksFilterValue: TasksFilterType) => {
         props.changeTaskFilter(tasksFilterValue);
+    }
+    
+    const handleChangeCheckBox = (taskID: number, isDone: boolean) => {
+        props.changeTaskStatus(taskID, isDone );
     }
 
     return (
@@ -37,7 +42,10 @@ export const Todolist = (props: PropsType) => {
                     return (
                         <li key={task.id}>
                             <button onClick={() => removeTask(task.id)}>x</button>
-                            <input type="checkbox" checked={task.isDone}/><span>{task.title}</span>
+                            <input type="checkbox"
+                                   checked={task.isDone}
+                                   onChange={(event: ChangeEvent<HTMLInputElement>) => handleChangeCheckBox(task.id, event.currentTarget.checked)}
+                                   /><span>{task.title}</span>
                         </li>
                     )
                 })}
