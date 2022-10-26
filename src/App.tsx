@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { v1 } from 'uuid';
 import './App.css';
 import {TasksFilterType, TaskType, Todolist} from './Todolist';
 
@@ -17,9 +18,9 @@ export const App = () => {
 
     const [tasks, setTasks] = useState<Array<TaskType>>(
         [
-            {id: 1, title: 'HTML&CSS', isDone: true},
-            {id: 2, title: 'JS', isDone: true},
-            {id: 3, title: 'ReactJS', isDone: false},
+            {id: v1(), title: 'HTML&CSS', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'ReactJS', isDone: false},
         ],
     );
 
@@ -35,7 +36,7 @@ export const App = () => {
     }
 
 
-    const removeTask = (taskID: number) => {
+    const removeTask = (taskID: string) => {
         setTasks(tasks.filter((task: TaskType) => task.id !== taskID));
     }
 
@@ -43,9 +44,14 @@ export const App = () => {
         setFilter(tasksFilterValue);
     }
 
-    const changeTaskStatus = (taskID: number, isDone: boolean) => {
+    const changeTaskStatus = (taskID: string, isDone: boolean) => {
         console.log(isDone)
         setTasks(tasks.map((task: TaskType) => task.id === taskID ? {...task, isDone} : task));
+    }
+
+    const addTask = (title: string) => {
+        console.log(title);
+        setTasks([{id: v1(), title, isDone: false}, ...tasks])
     }
 
     return (
@@ -57,6 +63,7 @@ export const App = () => {
                       removeTask={removeTask}
                       changeTaskFilter={changeTaskFilter}
                       changeTaskStatus={changeTaskStatus}
+                      addTask={addTask}
             />
             {/*<Todolist title={'Movies'}/>*/}
             {/*<div>*/}
