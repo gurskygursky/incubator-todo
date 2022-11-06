@@ -64,6 +64,7 @@ export const App = () => {
                       changeTaskFilter={changeTaskFilter}
                       changeTaskStatus={changeTaskStatus}
                       addTask={addTask}
+                      taskFilterValue={filter}
             />
             {/*<Todolist title={'Movies'}/>*/}
             {/*<div>*/}
