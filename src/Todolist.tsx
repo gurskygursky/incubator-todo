@@ -20,6 +20,7 @@ type PropsType = {
 export const Todolist = (props: PropsType) => {
 
     const [inputValue, setInputValue] = useState<string>('');
+    const [error, setError] = useState<string>('');
 
     const removeTask = (taskID: string) => {
         props.removeTask(taskID);
@@ -34,21 +35,41 @@ export const Todolist = (props: PropsType) => {
     }
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.currentTarget.value === '') {
+            setError('Incorrect input values');
+        }
+        if (event.currentTarget.value !== '') {
+            setError('');
+        }
         setInputValue(event.currentTarget.value);
+    }
+    const onBlurHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.currentTarget.value === '') {
+            setError('Incorrect input values');
+        }
+        if (event.currentTarget.value !== '') {
+            setError('');
+        }
     }
 
     const addTask = () => {
         if (inputValue.trim() !== '') {
             props.addTask(inputValue);
+            setInputValue('');
+            setError('');
         }
-        setInputValue('');
+        if (inputValue.trim() === '') {
+            setError('Incorrect input values');
+        }
     }
 
     const onKeyPressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
         const {key} = event;
 
         if (key === 'Enter') {
-            addTask();
+            if (inputValue !== '') {
+                addTask();
+            }
         }
     }
 
@@ -56,8 +77,9 @@ export const Todolist = (props: PropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input value={inputValue} onChange={onChangeInputHandler} onKeyDown={onKeyPressEnter}/>
+                <input value={inputValue} onChange={onChangeInputHandler} onKeyDown={onKeyPressEnter} onBlur={onBlurHandler}/>
                 <button onClick={addTask}>+</button>
+                <div style={{color: 'crimson'}}>{error}</div>
             </div>
             <ul>
                 {props.tasks.map((task: TaskType) => {
