@@ -52,14 +52,23 @@ export const App = () => {
     }
 
     const changeTaskStatus = (todolistID: string, taskID: string, isDone: boolean) => {
-        setTasks({...tasks,
-            [todolistID]: tasks[todolistID].map((task: TaskType) => task.id === taskID ? {...task, isDone} : task)});
+        setTasks({
+            ...tasks,
+            [todolistID]: tasks[todolistID].map((task: TaskType) => task.id === taskID ? {...task, isDone} : task)
+        });
     }
 
     const addTask = (todolistID: string, title: string) => {
         tasks[todolistID] = [{id: v1(), title, isDone: false}, ...tasks[todolistID]];
         setTasks({...tasks});
         // setTasks([{id: v1(), title, isDone: false}, ...tasks])
+    }
+
+    const removeTodolist = (todolistID: string) => {
+        setLists(lists.filter((todolist: TodolistType) => todolist.id !== todolistID));
+        delete tasks[todolistID]
+        setTasks({...tasks});
+        console.log(tasks, todolistID1, todolistID2)
     }
 
     return (
@@ -85,7 +94,9 @@ export const App = () => {
                                       changeTaskFilter={changeTaskFilter}
                                       changeTaskStatus={changeTaskStatus}
                                       addTask={addTask}
-                                      taskFilterValue={todolist.filter}/>
+                                      taskFilterValue={todolist.filter}
+                                      removeTodolist={removeTodolist}
+                            />
                         )
                     }
                 )}
