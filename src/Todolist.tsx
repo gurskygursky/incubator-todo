@@ -11,7 +11,9 @@ export type TaskType = {
     title: string;
     isDone: boolean;
 }
-
+export type TasksType = {
+    [key: string]: Array<TaskType>;
+}
 export type TasksFilterType = 'All' | 'Active' | 'Completed';
 
 type PropsType = {

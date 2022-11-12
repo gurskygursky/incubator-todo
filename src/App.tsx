@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {v1} from 'uuid';
 import './App.css';
-import {TasksFilterType, TaskType, Todolist, TodolistType} from './Todolist';
+import {TasksFilterType, TasksType, TaskType, Todolist, TodolistType} from './Todolist';
 
 export const App = () => {
 
@@ -26,7 +26,7 @@ export const App = () => {
         {id: todolistID2, title: 'What to buy', filter: 'All'},
     ]);
 
-    let [tasks, setTasks] = useState({
+    let [tasks, setTasks] = useState<TasksType>({
         [todolistID1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
