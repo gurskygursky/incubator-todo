@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { v1 } from 'uuid';
+import {v1} from 'uuid';
 import './App.css';
-import {TasksFilterType, TaskType, Todolist} from './Todolist';
+import {TasksFilterType, TaskType, Todolist, TodolistType} from './Todolist';
 
 // const tasks1 = [
 //     { id: 1, title: "HTML&CSS", isDone: true },
@@ -24,24 +24,34 @@ export const App = () => {
         ],
     );
 
-    const [filter, setFilter] = useState<TasksFilterType>('All');
+    const [lists, setLists] = useState<Array<TodolistType>>([
+        {id: v1(), title: 'What to learn', filter: 'All'},
+        {id: v1(), title: 'What to read', filter: 'All'}
+    ]);
 
-    let filteredTasks = tasks;
+    // const [filter, setFilter] = useState<TasksFilterType>('All');
 
-    if (filter === 'Active') {
-        filteredTasks = tasks.filter((task: TaskType) => !task.isDone);
-    }
-    if (filter === 'Completed') {
-        filteredTasks = tasks.filter((task: TaskType) => task.isDone);
-    }
+    // let filteredTasks = tasks;
+    //
+    // if (filter === 'Active') {
+    //     filteredTasks = tasks.filter((task: TaskType) => !task.isDone);
+    // }
+    // if (filter === 'Completed') {
+    //     filteredTasks = tasks.filter((task: TaskType) => task.isDone);
+    // }
 
 
     const removeTask = (taskID: string) => {
         setTasks(tasks.filter((task: TaskType) => task.id !== taskID));
     }
 
-    const changeTaskFilter = (tasksFilterValue: TasksFilterType) => {
-        setFilter(tasksFilterValue);
+    const changeTaskFilter = (todolistID: string, tasksFilterValue: TasksFilterType) => {
+        let todolist = lists.find((td: TodolistType) => td.id === todolistID);
+        if (todolist) {
+            todolist.filter = tasksFilterValue;
+            setLists([...lists]);
+        }
+        // setFilter(tasksFilterValue);
     }
 
     const changeTaskStatus = (taskID: string, isDone: boolean) => {
@@ -56,16 +66,41 @@ export const App = () => {
 
     return (
         <div className="App">
+            {
+                lists.map((todolist: TodolistType) => {
+
+                    let filteredTasks = tasks;
+
+                    if (todolist.filter === 'Active') {
+                        filteredTasks = tasks.filter((task: TaskType) => !task.isDone);
+                    }
+                    if (todolist.filter === 'Completed') {
+                        filteredTasks = tasks.filter((task: TaskType) => task.isDone);
+                    }
+
+                return (
+                    <Todolist key={todolist.id}
+                              todolistID={todolist.id}
+                              title={todolist.title}
+                              tasks={filteredTasks}
+                              removeTask={removeTask}
+                              changeTaskFilter={changeTaskFilter}
+                              changeTaskStatus={changeTaskStatus}
+                              addTask={addTask}
+                              taskFilterValue={todolist.filter}/>
+                )
+                }
+            )}
             {/*<Todolist title={'What to learn'} tasks={tasks1}/>*/}
             {/*<Todolist title={'What to read'} tasks={tasks2}/>*/}
-            <Todolist title={'What to learn'}
-                      tasks={filteredTasks}
-                      removeTask={removeTask}
-                      changeTaskFilter={changeTaskFilter}
-                      changeTaskStatus={changeTaskStatus}
-                      addTask={addTask}
-                      taskFilterValue={filter}
-            />
+            {/*<Todolist title={'What to learn'}*/}
+            {/*          tasks={filteredTasks}*/}
+            {/*          removeTask={removeTask}*/}
+            {/*          changeTaskFilter={changeTaskFilter}*/}
+            {/*          changeTaskStatus={changeTaskStatus}*/}
+            {/*          addTask={addTask}*/}
+            {/*          taskFilterValue={filter}*/}
+            {/*/>*/}
             {/*<Todolist title={'Movies'}/>*/}
             {/*<div>*/}
             {/*    <h3>What to learn</h3>*/}
