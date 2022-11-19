@@ -74,8 +74,8 @@ export const Todolist = (props: PropsType) => {
         }
     }
 
-    const removeTodolist = (todolistID: string) => {
-        props.removeTodolist(todolistID);
+    const removeTodolist = () => {
+        props.removeTodolist(props.todolistID);
     }
 
     const onKeyPressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -95,8 +95,10 @@ export const Todolist = (props: PropsType) => {
 
     return (
         <div>
-            <button onClick={() => removeTodolist(props.todolistID)}>x</button>
-            <h3>{props.title}</h3>
+            <h3>
+                {props.title}
+                <button onClick={removeTodolist}>x</button>
+            </h3>
             <div>
                 <input style={styleError} value={inputValue} onChange={onChangeInputHandler} onKeyDown={onKeyPressEnter}
                        onBlur={onBlurHandler}/>
