@@ -1,5 +1,6 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import './App.css';
+import {AddItem} from 'src/AddItem';
 
 export type TodolistType = {
     id: string;
@@ -30,8 +31,8 @@ type PropsType = {
 
 export const Todolist = (props: PropsType) => {
 
-    const [inputValue, setInputValue] = useState<string>('');
-    const [error, setError] = useState<string>('');
+    // const [inputValue, setInputValue] = useState<string>('');
+    // const [error, setError] = useState<string>('');
 
     const removeTask = (todolistID: string, taskID: string) => {
         props.removeTask(todolistID, taskID);
@@ -45,53 +46,57 @@ export const Todolist = (props: PropsType) => {
         props.changeTaskStatus(todolistID, taskID, isDone);
     }
 
-    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.value === '') {
-            setError('Incorrect input values');
-        }
-        if (event.currentTarget.value !== '') {
-            setError('');
-        }
-        setInputValue(event.currentTarget.value);
-    }
-    const onBlurHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.value === '') {
-            setError('Incorrect input values');
-        }
-        if (event.currentTarget.value !== '') {
-            setError('');
-        }
-    }
+    // const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    //     if (event.currentTarget.value === '') {
+    //         setError('Incorrect input values');
+    //     }
+    //     if (event.currentTarget.value !== '') {
+    //         setError('');
+    //     }
+    //     setInputValue(event.currentTarget.value);
+    // }
+    // const onBlurHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    //     if (event.currentTarget.value === '') {
+    //         setError('Incorrect input values');
+    //     }
+    //     if (event.currentTarget.value !== '') {
+    //         setError('');
+    //     }
+    // }
 
-    const addTask = () => {
-        if (inputValue.trim() !== '') {
-            props.addTask(props.todolistID, inputValue);
-            setInputValue('');
-            setError('');
-        }
-        if (inputValue.trim() === '') {
-            setError('Incorrect input values');
-        }
+    // const addTask = () => {
+    //     if (inputValue.trim() !== '') {
+    //         props.addTask(props.todolistID, inputValue);
+    //         setInputValue('');
+    //         setError('');
+    //     }
+    //     if (inputValue.trim() === '') {
+    //         setError('Incorrect input values');
+    //     }
+    //     console.log(props.tasks);
+    // }
+    const addTask = (title: string) => {
+            props.addTask(props.todolistID, title);
     }
 
     const removeTodolist = () => {
         props.removeTodolist(props.todolistID);
     }
 
-    const onKeyPressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
-        const {key} = event;
+    // const onKeyPressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    //     const {key} = event;
+    //
+    //     if (key === 'Enter') {
+    //         if (inputValue !== '') {
+    //             addTask(inputValue);
+    //         }
+    //     }
+    // }
 
-        if (key === 'Enter') {
-            if (inputValue !== '') {
-                addTask();
-            }
-        }
-    }
-
-    const styleError = error ? {outline: 'none', borderColor: 'crimson', borderRadius: '3px'} : {
-        outline: 'none',
-        borderColor: ''
-    };
+    // const styleError = error ? {outline: 'none', borderColor: 'crimson', borderRadius: '3px'} : {
+    //     outline: 'none',
+    //     borderColor: ''
+    // };
 
     return (
         <div>
@@ -99,12 +104,13 @@ export const Todolist = (props: PropsType) => {
                 {props.title}
                 <button onClick={removeTodolist}>x</button>
             </h3>
-            <div>
-                <input style={styleError} value={inputValue} onChange={onChangeInputHandler} onKeyDown={onKeyPressEnter}
-                       onBlur={onBlurHandler}/>
-                <button onClick={addTask} disabled={error ? true : false}>+</button>
-                <div style={{color: 'crimson'}}>{error}</div>
-            </div>
+            {/*<div>*/}
+                <AddItem callback={addTask}/>
+                {/*<input style={styleError} value={inputValue} onChange={onChangeInputHandler} onKeyDown={onKeyPressEnter}*/}
+                {/*       onBlur={onBlurHandler}/>*/}
+                {/*<button onClick={addTask} disabled={error ? true : false}>+</button>*/}
+                {/*<div style={{color: 'crimson'}}>{error}</div>*/}
+            {/*</div>*/}
             <ul>
                 {props.tasks.map((task: TaskType) => {
                     return (
