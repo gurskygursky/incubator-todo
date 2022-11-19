@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {v1} from 'uuid';
 import './App.css';
 import {TasksFilterType, TasksType, TaskType, Todolist, TodolistType} from './Todolist';
+import {AddItem} from './AddItem';
 
 export const App = () => {
 
@@ -21,7 +22,7 @@ export const App = () => {
     let todolistID1 = v1();
     let todolistID2 = v1();
 
-    let [lists, setLists] = useState<Array<TodolistType>>([
+    const [lists, setLists] = useState<Array<TodolistType>>([
         {id: todolistID1, title: 'What to learn', filter: 'All'},
         {id: todolistID2, title: 'What to buy', filter: 'All'},
     ]);
@@ -64,6 +65,13 @@ export const App = () => {
         // setTasks([{id: v1(), title, isDone: false}, ...tasks])
     }
 
+    const addTodolist = (title: string) => {
+        let newTodolistID = v1();
+        let newTodolist: TodolistType = {id: newTodolistID, title, filter: 'All'};
+        setLists([...lists, newTodolist]);
+        setTasks({...tasks, [newTodolistID]: []});
+    }
+
     const removeTodolist = (todolistID: string) => {
         setLists(lists.filter((todolist: TodolistType) => todolist.id !== todolistID));
         delete tasks[todolistID]
@@ -73,6 +81,7 @@ export const App = () => {
 
     return (
         <div className="App">
+            <AddItem callback={addTodolist}/>
             {
                 lists.map((todolist: TodolistType) => {
 
