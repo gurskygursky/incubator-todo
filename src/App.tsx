@@ -79,6 +79,10 @@ export const App = () => {
         console.log(tasks, todolistID1, todolistID2)
     }
 
+    const editTaskTitle = (todolistID: string, taskID: string, title: string) => {
+        setTasks({...tasks, [todolistID]: tasks[todolistID].map((task: TaskType) => task.id === taskID ? {...task, title} : task )})
+    }
+
     return (
         <div className="App">
             <AddItem callback={addTodolist}/>
@@ -105,6 +109,7 @@ export const App = () => {
                                       addTask={addTask}
                                       taskFilterValue={todolist.filter}
                                       removeTodolist={removeTodolist}
+                                      editTaskTitle={editTaskTitle}
                             />
                         )
                     }

@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import './App.css';
 import {AddItem} from 'src/AddItem';
+import {EditableSpan} from './EditableSpan';
 
 export type TodolistType = {
     id: string;
@@ -27,6 +28,7 @@ type PropsType = {
     addTask: (todolistID: string, title: string) => void;
     removeTodolist: (todolistID: string) => void;
     taskFilterValue: TasksFilterType;
+    editTaskTitle: (todolistID: string, taskID: string, title: string) => void;
 }
 
 export const Todolist = (props: PropsType) => {
@@ -83,6 +85,9 @@ export const Todolist = (props: PropsType) => {
         props.removeTodolist(props.todolistID);
     }
 
+    const editTaskTitle = (taskID: string, title: string) => {
+        props.editTaskTitle(props.todolistID, taskID, title);
+    }
     // const onKeyPressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
     //     const {key} = event;
     //
@@ -120,7 +125,9 @@ export const Todolist = (props: PropsType) => {
                             <input type="checkbox"
                                    checked={task.isDone}
                                    onChange={(event: ChangeEvent<HTMLInputElement>) => handleChangeCheckBox(props.todolistID, task.id, event.currentTarget.checked)}
-                            /><span>{task.title}</span>
+                            />
+                            <EditableSpan value={task.title} callback={(value) => editTaskTitle(task.id, value)}/>
+                            {/*<span>{task.title}</span>*/}
                         </li>
                     )
                 })}
