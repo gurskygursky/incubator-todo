@@ -29,6 +29,7 @@ type PropsType = {
     removeTodolist: (todolistID: string) => void;
     taskFilterValue: TasksFilterType;
     editTaskTitle: (todolistID: string, taskID: string, title: string) => void;
+    editTodolistTitle: (todolistID: string, title: string) => void;
 }
 
 export const Todolist = (props: PropsType) => {
@@ -88,6 +89,10 @@ export const Todolist = (props: PropsType) => {
     const editTaskTitle = (taskID: string, title: string) => {
         props.editTaskTitle(props.todolistID, taskID, title);
     }
+
+    const editTodolistTitle = (title: string) => {
+        props.editTodolistTitle(props.todolistID, title);
+    }
     // const onKeyPressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
     //     const {key} = event;
     //
@@ -107,7 +112,8 @@ export const Todolist = (props: PropsType) => {
 
         <div>
             <h3>
-                {props.title}
+                <EditableSpan value={props.title} callback={(value) => editTodolistTitle(value)}/>
+                {/*{props.title}*/}
                 <button onClick={removeTodolist}>x</button>
             </h3>
             {/*<div>*/}
