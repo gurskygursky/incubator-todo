@@ -92,7 +92,7 @@ export const App = () => {
 
     return (
         <div className="App">
-            <AddItem callback={addTodolist}/>
+            {/*<AddItem callback={addTodolist}/>*/}
             {
                 lists.map((todolist: TodolistType) => {
 
