@@ -42,13 +42,16 @@ export const AddItem: React.FC<PropsType> = (props) => {
             if (inputValue !== '') {
                 onClickHandler();
             }
+            if (inputValue === null) {
+                setError('Incorrect input value');
+            }
         }
     }
 
     const onBlurHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.value === '') {
-            setError('Incorrect input values');
-        }
+        // if (event.currentTarget.value === '') {
+        //     setError('Incorrect input values');
+        // }
         if (event.currentTarget.value !== '') {
             setError('');
         }

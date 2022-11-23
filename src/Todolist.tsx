@@ -2,6 +2,7 @@ import React, {ChangeEvent} from 'react';
 import './App.css';
 import {AddItem} from 'src/AddItem';
 import {EditableSpan} from './EditableSpan';
+import {Task} from 'src/Task';
 
 export type TodolistType = {
     id: string;
@@ -34,9 +35,6 @@ type PropsType = {
 
 export const Todolist = (props: PropsType) => {
 
-    // const [inputValue, setInputValue] = useState<string>('');
-    // const [error, setError] = useState<string>('');
-
     const removeTask = (todolistID: string, taskID: string) => {
         props.removeTask(todolistID, taskID);
     }
@@ -49,37 +47,8 @@ export const Todolist = (props: PropsType) => {
         props.changeTaskStatus(todolistID, taskID, isDone);
     }
 
-    // const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    //     if (event.currentTarget.value === '') {
-    //         setError('Incorrect input values');
-    //     }
-    //     if (event.currentTarget.value !== '') {
-    //         setError('');
-    //     }
-    //     setInputValue(event.currentTarget.value);
-    // }
-    // const onBlurHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    //     if (event.currentTarget.value === '') {
-    //         setError('Incorrect input values');
-    //     }
-    //     if (event.currentTarget.value !== '') {
-    //         setError('');
-    //     }
-    // }
-
-    // const addTask = () => {
-    //     if (inputValue.trim() !== '') {
-    //         props.addTask(props.todolistID, inputValue);
-    //         setInputValue('');
-    //         setError('');
-    //     }
-    //     if (inputValue.trim() === '') {
-    //         setError('Incorrect input values');
-    //     }
-    //     console.log(props.tasks);
-    // }
     const addTask = (title: string) => {
-            props.addTask(props.todolistID, title);
+        props.addTask(props.todolistID, title);
     }
 
     const removeTodolist = () => {
@@ -93,51 +62,38 @@ export const Todolist = (props: PropsType) => {
     const editTodolistTitle = (title: string) => {
         props.editTodolistTitle(props.todolistID, title);
     }
-    // const onKeyPressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
-    //     const {key} = event;
-    //
-    //     if (key === 'Enter') {
-    //         if (inputValue !== '') {
-    //             addTask(inputValue);
-    //         }
-    //     }
-    // }
-
-    // const styleError = error ? {outline: 'none', borderColor: 'crimson', borderRadius: '3px'} : {
-    //     outline: 'none',
-    //     borderColor: ''
-    // };
 
     return (
 
         <div>
             <h3>
                 <EditableSpan value={props.title} callback={(value) => editTodolistTitle(value)}/>
-                {/*{props.title}*/}
                 <button onClick={removeTodolist}>x</button>
             </h3>
-            {/*<div>*/}
-                <AddItem callback={addTask}/>
-                {/*<input style={styleError} value={inputValue} onChange={onChangeInputHandler} onKeyDown={onKeyPressEnter}*/}
-                {/*       onBlur={onBlurHandler}/>*/}
-                {/*<button onClick={addTask} disabled={error ? true : false}>+</button>*/}
-                {/*<div style={{color: 'crimson'}}>{error}</div>*/}
-            {/*</div>*/}
-            <ul>
-                {props.tasks.map((task: TaskType) => {
-                    return (
-                        <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-                            <button onClick={() => removeTask(props.todolistID, task.id)}>x</button>
-                            <input type="checkbox"
-                                   checked={task.isDone}
-                                   onChange={(event: ChangeEvent<HTMLInputElement>) => handleChangeCheckBox(props.todolistID, task.id, event.currentTarget.checked)}
-                            />
-                            <EditableSpan value={task.title} callback={(value) => editTaskTitle(task.id, value)}/>
-                            {/*<span>{task.title}</span>*/}
-                        </li>
-                    )
-                })}
-            </ul>
+            <AddItem callback={addTask}/>
+            {props.tasks.map((task: TaskType) =>
+                <Task task={task}
+                      key={task.id}
+                      todolistID={props.todolistID}
+                      removeTask={removeTask}
+                      changeTaskStatus={handleChangeCheckBox}
+                      editTaskTitle={editTaskTitle}
+                />
+            )}
+            {/*<ul>*/}
+            {/*    {props.tasks.map((task: TaskType) => {*/}
+            {/*        return (*/}
+            {/*            <li key={task.id} className={task.isDone ? 'is-done' : ''}>*/}
+            {/*                <button onClick={() => removeTask(props.todolistID, task.id)}>x</button>*/}
+            {/*                <input type="checkbox"*/}
+            {/*                       checked={task.isDone}*/}
+            {/*                       onChange={(event: ChangeEvent<HTMLInputElement>) => handleChangeCheckBox(props.todolistID, task.id, event.currentTarget.checked)}*/}
+            {/*                />*/}
+            {/*                <EditableSpan value={task.title} callback={(value) => editTaskTitle(task.id, value)}/>*/}
+            {/*            </li>*/}
+            {/*        )*/}
+            {/*    })}*/}
+            {/*</ul>*/}
             <div>
                 <button className={props.taskFilterValue === 'All' ? 'active-filter' : ''}
                         onClick={() => onClickChangeFilter(props.todolistID, 'All')}>All

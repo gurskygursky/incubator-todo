@@ -6,19 +6,6 @@ import {AddItem} from './AddItem';
 
 export const App = () => {
 
-    // const [tasks, setTasks] = useState<Array<TaskType>>(
-    //     [
-    //         {id: v1(), title: 'HTML&CSS', isDone: true},
-    //         {id: v1(), title: 'JS', isDone: true},
-    //         {id: v1(), title: 'ReactJS', isDone: false},
-    //     ],
-    // );
-
-    // const [lists, setLists] = useState<Array<TodolistType>>([
-    //     {id: v1(), title: 'What to learn', filter: 'All'},
-    //     {id: v1(), title: 'What to read', filter: 'All'}
-    // ]);
-
     let todolistID1 = v1();
     let todolistID2 = v1();
 
@@ -36,9 +23,8 @@ export const App = () => {
         [todolistID2]: [
             {id: v1(), title: 'Rest API', isDone: true},
             {id: v1(), title: 'GraphQL', isDone: false},
-        ]
-    })
-
+        ],
+    });
 
     const removeTask = (todolistID: string, taskID: string) => {
         setTasks({...tasks, [todolistID]: tasks[todolistID].filter((task: TaskType) => task.id !== taskID)});
@@ -62,7 +48,6 @@ export const App = () => {
     const addTask = (todolistID: string, title: string) => {
         tasks[todolistID] = [{id: v1(), title, isDone: false}, ...tasks[todolistID]];
         setTasks({...tasks});
-        // setTasks([{id: v1(), title, isDone: false}, ...tasks])
     }
 
     const addTodolist = (title: string) => {
@@ -83,7 +68,7 @@ export const App = () => {
         setTasks({
             ...tasks,
             [todolistID]: tasks[todolistID].map((task: TaskType) => task.id === taskID ? {...task, title} : task)
-        })
+        });
     }
 
     const editTodolistTitle = (todolistID: string, title: string) => {
@@ -92,7 +77,7 @@ export const App = () => {
 
     return (
         <div className="App">
-            {/*<AddItem callback={addTodolist}/>*/}
+            <AddItem callback={addTodolist}/>
             {
                 lists.map((todolist: TodolistType) => {
 
