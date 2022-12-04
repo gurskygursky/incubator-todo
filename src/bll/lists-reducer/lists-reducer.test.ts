@@ -1,11 +1,11 @@
 import { v1 } from 'uuid'
-import {TodolistType} from './../../Todolist';
+import {TasksFilterType, TodolistType} from './../../Todolist';
 import {listsReducer} from './lists-reducer';
 
 test('correct todolist should be removed', () => {
 
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+    const todolistId1 = v1();
+    const todolistId2 = v1();
 
     const startState: Array<TodolistType> = [
         {id: todolistId1, title: 'What to learn', filter: 'All'},
@@ -23,7 +23,7 @@ test('correct todolist should be added', () => {
     const todolistId1 = v1();
     const todolistId2 = v1();
 
-    let newTodolistTitle = 'New Todolist';
+    const newTodolistTitle = 'New Todolist';
 
     const startState: Array<TodolistType> = [
         {id: todolistId1, title: 'What to learn', filter: 'All'},
@@ -38,49 +38,51 @@ test('correct todolist should be added', () => {
     expect(endState[1].title).toEqual('What to buy');
 });
 
-//
-// test('correct todolist should change its name', () => {
-//     let todolistId1 = v1()
-//     let todolistId2 = v1()
-//
-//     let newTodolistTitle = 'New Todolist'
-//
-//     const startState: Array<TodolistType> = [
-//         {id: todolistId1, title: 'What to learn', filter: 'all'},
-//         {id: todolistId2, title: 'What to buy', filter: 'all'}
-//     ]
-//
-//     const action = {
-//         type: 'CHANGE-TODOLIST-TITLE',
-//         id: todolistId2,
-//         title: newTodolistTitle
-//     }
-//
-//     const endState = todolistsReducer(startState, action)
-//
-//     expect(endState[0].title).toBe('What to learn')
-//     expect(endState[1].title).toBe(newTodolistTitle)
-// });
-//
-// test('correct filter of todolist should be changed', () => {
-//     let todolistId1 = v1()
-//     let todolistId2 = v1()
-//
-//     let newFilter: FilterValuesType = 'completed'
-//
-//     const startState: Array<TodolistType> = [
-//         {id: todolistId1, title: 'What to learn', filter: 'all'},
-//         {id: todolistId2, title: 'What to buy', filter: 'all'}
-//     ]
-//
-//     const action = {
-//         type: 'CHANGE-TODOLIST-FILTER',
-//         id: todolistId2,
-//         filter: newFilter
-//     }
-//
-//     const endState = todolistsReducer(startState, action)
-//
-//     expect(endState[0].filter).toBe('all')
-//     expect(endState[1].filter).toBe(newFilter)
-// });
+test('correct todolist should change its name', () => {
+
+    const todolistId1 = v1();
+    const todolistId2 = v1();
+
+    const newTodolistTitle = 'New Todolist';
+
+    const startState: Array<TodolistType> = [
+        {id: todolistId1, title: 'What to learn', filter: 'All'},
+        {id: todolistId2, title: 'What to buy', filter: 'All'},
+    ]
+
+    const action = {
+        type: 'CHANGE_TODOLIST_TITLE',
+        id: todolistId2,
+        title: newTodolistTitle
+    }
+
+    const endState = listsReducer(startState, action);
+
+    expect(endState[0].title).toEqual('What to learn');
+    expect(endState[1].title).toBe(newTodolistTitle);
+});
+
+test('correct filter of todolist should be changed', () => {
+
+    const todolistId1 = v1();
+    const todolistId2 = v1();
+
+    const newFilter: TasksFilterType = 'Completed'
+
+    const startState: Array<TodolistType> = [
+        {id: todolistId1, title: 'What to learn', filter: 'All'},
+        {id: todolistId2, title: 'What to buy', filter: 'All'}
+    ]
+
+    const action = {
+        type: 'CHANGE_TODOLIST_FILTER',
+        id: todolistId2,
+        filter: newFilter
+    }
+
+    const endState = listsReducer(startState, action);
+
+    expect(endState[0].filter).toBe('All');
+    expect(endState[1].filter).toBe(newFilter);
+    expect(endState[1].title).toEqual('What to buy');
+});
