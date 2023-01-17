@@ -94,13 +94,19 @@ function App() {
         setTasks({...tasks, [todolistID]: tasks[todolistID].map(task => task.id === taskID ? {...task, title} : task)})
     }
 
+    const addTodolist = (title: string) => {
+        const newTodolistID = v1();
+        setTodolists([{id: newTodolistID, title: title, filter: 'all'}, ...todolists]);
+        setTasks({...tasks, [newTodolistID]: []});
+    }
+
 
     return (
         <div className="App">
                 <ButtonAppBar/>
             <Container fixed>
                 <Grid container padding={'20px'}>
-                    <AddItemForm callback={() => {}}/>
+                    <AddItemForm callback={addTodolist}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {
