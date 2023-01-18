@@ -20,7 +20,7 @@ type TasksStateType = {
 }
 
 
-function App() {
+export function App() {
     let todolistId1 = v1();
     let todolistId2 = v1();
 
@@ -108,7 +108,7 @@ function App() {
                 <Grid container padding={'20px'}>
                     <AddItemForm callback={addTodolist}/>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={10}>
                     {
                         todolists.map(tl => {
                             let allTodolistTasks = tasks[tl.id];
@@ -121,10 +121,9 @@ function App() {
                                 tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
                             }
 
-                            return <Grid item>
-                                <Paper style={{padding: '10px'}} elevation={6}>
+                            return <Grid item key={tl.id}>
+                                <Paper style={{padding: '10px'}} elevation={12}>
                                 <Todolist
-                                    key={tl.id}
                                     id={tl.id}
                                     title={tl.title}
                                     tasks={tasksForTodolist}
@@ -137,7 +136,6 @@ function App() {
                                     changeTaskTitle={changeTaskTitle}
                                 />
                                 </Paper>
-
                             </Grid>
                         })
                     }
@@ -146,5 +144,3 @@ function App() {
         </div>
     );
 }
-
-export default App;

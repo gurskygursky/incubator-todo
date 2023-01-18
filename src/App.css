@@ -1,12 +1,12 @@
 
 .App {
-  padding: 30px;
-  display: flex;
-  flex-flow: column;
+  /*padding: 30px;*/
+  /*display: flex;*/
+  /*flex-flow: column;*/
 }
 
 .App > div {
-  margin-right: 50px;
+  /*margin-right: 50px;*/
 }
 
 .error {
