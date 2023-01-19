@@ -77,7 +77,7 @@ export function Todolist(props: PropsType) {
         {/*</div>*/}
         <ul style={{listStyle: 'none', padding: 0}} key={props.id}>
             {
-                props.tasks.map(t => {
+                props.tasks.map((t: TaskType) => {
                     const onClickHandler = () => props.removeTask(t.id, props.id)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         let newIsDoneValue = e.currentTarget.checked;
