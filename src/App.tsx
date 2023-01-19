@@ -8,7 +8,7 @@ import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
 import {addTodolistAC, removeTodolistAC, todolistReducer} from './reducers/todolist-reducer';
-import {tasksReducer} from './reducers/tasks-reducer';
+import {changeTaskTitleAC, tasksReducer} from './reducers/tasks-reducer';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistType = {
@@ -108,6 +108,7 @@ export function App() {
     }
 
     const changeTaskTitle = (todolistID: string, taskID: string, title: string) => {
+        dispatchTasks(changeTaskTitleAC(todolistID, taskID, title));
         // setTasks({...tasks, [todolistID]: tasks[todolistID].map(task => task.id === taskID ? {...task, title} : task)})
     }
 
