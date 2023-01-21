@@ -8,7 +8,7 @@ import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
 import {addTodolistAC, removeTodolistAC, todolistReducer} from './reducers/todolist-reducer';
-import {changeTaskTitleAC, tasksReducer} from './reducers/tasks-reducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, tasksReducer} from './reducers/tasks-reducer';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistType = {
@@ -30,7 +30,7 @@ export function App() {
     //     {id: todolistId1, title: 'What to learn', filter: 'all'},
     //     {id: todolistId2, title: 'What to buy', filter: 'all'}
     // ])
-    let [todolists, dispatchTodolist] = useReducer(todolistReducer,[
+    let [todolists, dispatchTodolist] = useReducer(todolistReducer, [
         {id: todolistId1, title: 'What to learn', filter: 'all'},
         {id: todolistId2, title: 'What to buy', filter: 'all'},
     ])
@@ -67,6 +67,7 @@ export function App() {
     }
 
     function addTask(title: string, todolistId: string) {
+        dispatchTasks(addTaskAC(title, todolistId))
         // let task = {id: v1(), title: title, isDone: false};
         // //достанем нужный массив по todolistId:
         // let todolistTasks = tasks[todolistId];
@@ -76,7 +77,8 @@ export function App() {
         // setTasks({...tasks});
     }
 
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
+    function changeStatus(todolistId: string, id: string, isDone: boolean) {
+        dispatchTasks(changeTaskStatusAC(todolistId, id, isDone))
         // //достанем нужный массив по todolistId:
         // let todolistTasks = tasks[todolistId];
         // // найдём нужную таску:
@@ -124,7 +126,7 @@ export function App() {
 
     return (
         <div className="App">
-                <ButtonAppBar/>
+            <ButtonAppBar/>
             <Container fixed>
                 <Grid container padding={'20px'}>
                     <AddItemForm callback={addTodolist}/>
@@ -144,18 +146,18 @@ export function App() {
 
                             return <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}} elevation={12}>
-                                <Todolist
-                                    id={tl.id}
-                                    title={tl.title}
-                                    tasks={tasksForTodolist}
-                                    removeTask={removeTask}
-                                    changeFilter={changeFilter}
-                                    addTask={addTask}
-                                    changeTaskStatus={changeStatus}
-                                    filter={tl.filter}
-                                    removeTodolist={removeTodolist}
-                                    changeTaskTitle={changeTaskTitle}
-                                />
+                                    <Todolist
+                                        id={tl.id}
+                                        title={tl.title}
+                                        tasks={tasksForTodolist}
+                                        removeTask={removeTask}
+                                        changeFilter={changeFilter}
+                                        addTask={addTask}
+                                        changeTaskStatus={changeStatus}
+                                        filter={tl.filter}
+                                        removeTodolist={removeTodolist}
+                                        changeTaskTitle={changeTaskTitle}
+                                    />
                                 </Paper>
                             </Grid>
                         })
