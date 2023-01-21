@@ -1,9 +1,9 @@
 import {AddTodolistType} from '../reducers/todolist-reducer';
-import {TasksStateType} from './../App';
+import {FilterValuesType, TasksStateType} from './../App';
 import {TaskType} from '../Todolist';
 import {v1} from 'uuid';
 
-export const tasksReducer = (state: TasksStateType, action: AddTodolistType | ChangeTaskTitleType | AddTaskActionType | changeTaskStatusActionType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType, action: ActionsType | AddTodolistType): TasksStateType => {
     switch (action.type) {
         case 'ADD_TODOLIST':
             return {...state, [action.payload.todolistID]: []}
@@ -30,6 +30,11 @@ export const tasksReducer = (state: TasksStateType, action: AddTodolistType | Ch
                     state[action.payload.todolistId].map((task: TaskType) => task.id === action.payload.taskID
                         ? {...task, isDone: action.payload.isDone}
                         : task)
+            }
+        case 'REMOVE_TASK':
+            return {
+                ...state,
+                [action.payload.todolistId]: state[action.payload.todolistId].filter((task: TaskType) => task.id !== action.payload.taskID)
             }
         default:
             return state
@@ -68,7 +73,24 @@ export const changeTaskStatusAC = (todolistId: string, taskID: string, isDone: b
     } as const
 }
 
+export const removeTaskAC = (todolistId: string, taskID: string) => {
+    return {
+        type: 'REMOVE_TASK',
+        payload: {
+            todolistId,
+            taskID,
+        }
+    } as const
+}
+
+
+type ActionsType = ChangeTaskTitleType
+    | AddTaskActionType
+    | ChangeTaskStatusActionType
+    | RemoveTaskActionType
+
 type ChangeTaskTitleType = ReturnType<typeof changeTaskTitleAC>;
 type AddTaskActionType = ReturnType<typeof addTaskAC>;
-type changeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>;
+type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>;
+type RemoveTaskActionType = ReturnType<typeof removeTaskAC>;
 

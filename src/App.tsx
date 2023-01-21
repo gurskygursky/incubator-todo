@@ -7,8 +7,8 @@ import {AddItemForm} from './AddItemForm';
 import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
-import {addTodolistAC, removeTodolistAC, todolistReducer} from './reducers/todolist-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, tasksReducer} from './reducers/tasks-reducer';
+import {addTodolistAC, changeTasksFilterAC, removeTodolistAC, todolistReducer} from './reducers/todolist-reducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './reducers/tasks-reducer';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistType = {
@@ -57,7 +57,8 @@ export function App() {
     });
 
 
-    function removeTask(id: string, todolistId: string) {
+    function removeTask(todolistId: string, id: string) {
+        dispatchTasks(removeTaskAC(todolistId, id))
         // //достанем нужный массив по todolistId:
         // let todolistTasks = tasks[todolistId];
         // // перезапишем в этом объекте массив для нужного тудулиста отфилтрованным массивом:
@@ -91,7 +92,8 @@ export function App() {
         // }
     }
 
-    function changeFilter(value: FilterValuesType, todolistId: string) {
+    function changeFilter(todolistId: string, value: FilterValuesType) {
+        dispatchTodolist(changeTasksFilterAC(todolistId, value))
         // let todolist = todolists.find(tl => tl.id === todolistId);
         // if (todolist) {
         //     todolist.filter = value;
