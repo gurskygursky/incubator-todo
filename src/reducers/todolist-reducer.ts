@@ -7,7 +7,7 @@ export const todolistReducer = (state: TodolistType[], action: ActionType) => {
             return state.filter(td => td.id !== action.payload.todolistId1)
         case 'ADD_TODOLIST':
             const newTodolist: TodolistType = {
-                id: action.payload.todolistID,
+                id: '777',
                 title: action.payload.title,
                 filter: 'all'
             };
