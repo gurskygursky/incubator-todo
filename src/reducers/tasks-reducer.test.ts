@@ -1,6 +1,12 @@
 import {v1} from 'uuid';
 import {TasksStateType} from './../AppWithReducers';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './../reducers/tasks-reducer';
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    tasksReducer
+} from './../reducers/tasks-reducer';
 
 test('correct task should be removed', () => {
 
@@ -80,6 +86,33 @@ test('correct task status should be changed', () => {
 
     expect(endState[todolistId1][0].isDone).toBe(false);
     expect(endState[todolistId1][1].isDone).toBe(true);
+    expect(endState[todolistId2]).toEqual([
+        {id: '1', title: 'Milk', isDone: true},
+        {id: '2', title: 'React Book', isDone: true}
+    ]);
+});
+
+test('correct task should be added', () => {
+
+    const todolistId1 = v1();
+    const todolistId2 = v1();
+
+    const startState: TasksStateType = {
+        [todolistId1]: [
+            {id: '1', title: 'HTML&CSS', isDone: true},
+            {id: '2', title: 'JS', isDone: true}
+        ],
+        [todolistId2]: [
+            {id: '1', title: 'Milk', isDone: true},
+            {id: '2', title: 'React Book', isDone: true}
+        ]
+    };
+
+    const endState = tasksReducer(startState, addTaskAC(todolistId1, 'xxxx'));
+
+    expect(endState[todolistId1][0].title).toBe('HTML&CSS');
+    expect(endState[todolistId1][1].title).toBe('JS');
+    expect(endState[todolistId1][2].title).toBe('xxxx');
     expect(endState[todolistId2]).toEqual([
         {id: '1', title: 'Milk', isDone: true},
         {id: '2', title: 'React Book', isDone: true}

@@ -17,7 +17,7 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType | AddTod
         case 'ADD_TASK':
             return {
                 ...state,
-                [action.payload.todolistId1]: [...state[action.payload.todolistId1], {
+                [action.payload.todolistId]: [...state[action.payload.todolistId], {
                     id: v1(),
                     title: action.payload.title,
                     isDone: false
@@ -52,12 +52,12 @@ export const changeTaskTitleAC = (todolistId: string, taskID: string, title: str
     } as const
 }
 
-export const addTaskAC = (title: string, todolistId1: string) => {
+export const addTaskAC = ( todolistId: string, title: string) => {
     return {
         type: 'ADD_TASK',
         payload: {
+            todolistId,
             title,
-            todolistId1,
         }
     } as const
 }
