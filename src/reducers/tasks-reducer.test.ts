@@ -1,5 +1,5 @@
 import {v1} from 'uuid';
-import {TasksStateType} from '../AppWithReducers';
+import {TasksStateType} from '../AppWithRedux';
 import {
     addTaskAC,
     changeTaskStatusAC,

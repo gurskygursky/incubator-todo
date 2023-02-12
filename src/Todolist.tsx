@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
-import {FilterValuesType} from './App';
+import {FilterValuesType} from './AppWithRedux';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
@@ -25,6 +25,7 @@ type PropsType = {
     removeTodolist: (id: string) => void
     filter: FilterValuesType
     changeTaskTitle: (todolistID: string, taskID: string, title: string) => void
+    changeTodolistTitle: (todolistID: string, title: string) => void
 }
 
 export function Todolist(props: PropsType) {
@@ -53,13 +54,17 @@ export function Todolist(props: PropsType) {
     const changeTaskTitle = (taskID: string, title: string) => {
         props.changeTaskTitle(props.id, taskID, title);
     }
+    const changeTodolistTitle = (todolistID: string, title: string) => {
+        props.changeTodolistTitle(todolistID, title);
+    }
 
     const onAllClickHandler = () => props.changeFilter(props.id,'all');
     const onActiveClickHandler = () => props.changeFilter(props.id, 'active');
     const onCompletedClickHandler = () => props.changeFilter(props.id, 'completed');
 
     return <div>
-        <h3> {props.title}
+        <h3>
+            <EditableSpan title={props.title} callback={(title) => changeTodolistTitle(props.id, title)}/>
             <IconButton aria-label="delete" onClick={removeTodolist}>
                 <DeleteIcon/>
             </IconButton>

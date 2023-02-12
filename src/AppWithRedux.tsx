@@ -6,7 +6,7 @@ import {AddItemForm} from './AddItemForm';
 import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
-import {addTodolistAC, changeTasksFilterAC, removeTodolistAC} from './reducers/todolist-reducer';
+import {addTodolistAC, changeTasksFilterAC, changeTodolistTitleAC, removeTodolistAC} from './reducers/todolist-reducer';
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './reducers/tasks-reducer';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
@@ -58,6 +58,10 @@ export function AppWithRedux() {
         dispatch(addTodolistAC(title));
     }
 
+    const changeTodolistTitle = (todolistID: string, title: string) => {
+        dispatch(changeTodolistTitleAC(todolistID, title));
+    }
+
 
     return (
         <div className="App">
@@ -92,6 +96,7 @@ export function AppWithRedux() {
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}
                                         changeTaskTitle={changeTaskTitle}
+                                        changeTodolistTitle={changeTodolistTitle}
                                     />
                                 </Paper>
                             </Grid>
