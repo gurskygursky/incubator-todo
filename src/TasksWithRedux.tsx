@@ -4,9 +4,7 @@ import {EditableSpan} from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {TaskType} from "./Todolist";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./reducers/store";
-import {TasksStateType} from "./AppWithRedux";
+import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
 
 type PropsType = {
@@ -16,7 +14,6 @@ type PropsType = {
 export const TasksWithRedux = ({tasks, todolistId}: PropsType) => {
 
     const dispatch = useDispatch();
-    // let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasksReducer[props.todolistId]);
 
     return (
         <ul style={{listStyle: 'none', padding: 0}} key={todolistId}>
@@ -24,17 +21,13 @@ export const TasksWithRedux = ({tasks, todolistId}: PropsType) => {
                 tasks.map((t: TaskType) => {
                     const onClickHandler = () => dispatch(removeTaskAC(todolistId, t.id));
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        let newIsDoneValue = e.currentTarget.checked;
-                        dispatch(changeTaskStatusAC(todolistId, t.id, newIsDoneValue));
-                        // props.changeTaskStatus(props.id, t.id, newIsDoneValue);
+                        dispatch(changeTaskStatusAC(todolistId, t.id, e.currentTarget.checked));
                     }
 
                     return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
                         <Checkbox onChange={onChangeHandler} checked={t.isDone}/>
-                        {/*<input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>*/}
-                        <EditableSpan title={t.title} callback={(title) => dispatch(changeTaskTitleAC(todolistId, t.id, title))}/>
-                        {/*<span>{t.title}</span>*/}
-                        {/*<button onClick={onClickHandler}>x</button>*/}
+                        <EditableSpan title={t.title}
+                                      callback={(title) => dispatch(changeTaskTitleAC(todolistId, t.id, title))}/>
                         <IconButton aria-label="delete" onClick={onClickHandler}>
                             <DeleteIcon/>
                         </IconButton>
@@ -42,5 +35,5 @@ export const TasksWithRedux = ({tasks, todolistId}: PropsType) => {
                 })
             }
         </ul>
-    )
+    );
 };

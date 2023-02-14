@@ -11,8 +11,9 @@ import {Tasks} from "./Tasks";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
 import {changeTasksFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./reducers/todolist-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./reducers/tasks-reducer";
 import {TasksWithRedux} from "./TasksWithRedux";
+import {tasksSelector} from "./reducers/selectors/tasks-selector";
 
 export type TaskType = {
     id: string
@@ -29,7 +30,6 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
     // let [error, setError] = useState<string | null>(null)
 
     const {id, title, filter} = todolist;
-
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasksReducer[id]);
     const dispatch = useDispatch();
 
