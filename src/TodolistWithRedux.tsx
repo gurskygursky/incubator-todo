@@ -10,6 +10,7 @@ import {AppRootStateType} from "./reducers/store";
 import {changeTasksFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./reducers/todolist-reducer";
 import {addTaskAC} from "./reducers/tasks-reducer";
 import {TasksWithRedux} from "./TasksWithRedux";
+import {tasksSelector} from "./reducers/selectors";
 
 export type TaskType = {
     id: string
@@ -24,7 +25,7 @@ type PropsType = {
 export const TodolistWithRedux = ({todolist}: PropsType) => {
 
     const {id, title, filter} = todolist;
-    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasksReducer[todolist.id]);
+    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => tasksSelector(state, todolist.id));
     const dispatch = useDispatch();
 
     if (filter === 'active') {
