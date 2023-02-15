@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {FilterValuesType} from './AppWithRedux';
 import {AddItemForm} from './components/AddItemForm';
 import {EditableSpan} from './components/EditableSpan';
@@ -27,12 +27,12 @@ type PropsType = {
     changeTodolistTitle: (todolistId: string, title: string) => void
 }
 
-export function Todolist(props: PropsType) {
-    const addTask = (newTitle: string) => {
+export const Todolist = (props: PropsType) => {
 
+    console.log('Todolist is rendered');
+    const addTask = useCallback((newTitle: string) => {
         props.addTask(newTitle, props.id);
-
-    }
+    }, []);
 
     const removeTodolist = () => props.removeTodolist(props.id)
 
@@ -88,4 +88,4 @@ export function Todolist(props: PropsType) {
                     onClick={onCompletedClickHandler}>Completed</Button>
         </div>
     </div>
-}
+};
