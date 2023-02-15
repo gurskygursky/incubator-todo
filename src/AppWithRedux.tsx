@@ -36,33 +36,33 @@ export const AppWithRedux = () => {
         dispatch(addTodolistAC(title));
     }, [dispatch]);
 
-    function removeTask(todolistId: string, id: string) {
-        dispatch(removeTaskAC(todolistId, id))
-    }
+    const removeTask = useCallback((todolistId: string, id: string) => {
+        dispatch(removeTaskAC(todolistId, id));
+    }, [dispatch]);
 
     const addTask = useCallback((title: string, todolistId: string) => {
         dispatch(addTaskAC(todolistId, title));
     }, [dispatch]);
 
-    function changeStatus(todolistId: string, id: string, isDone: boolean) {
-        dispatch(changeTaskStatusAC(todolistId, id, isDone))
-    }
+    const changeStatus = useCallback((todolistId: string, id: string, isDone: boolean) => {
+        dispatch(changeTaskStatusAC(todolistId, id, isDone));
+    }, [dispatch]);
 
-    function changeFilter(todolistId: string, value: FilterValuesType) {
-        dispatch(changeTasksFilterAC(todolistId, value))
-    }
+    const changeFilter = useCallback((todolistId: string, value: FilterValuesType) => {
+        dispatch(changeTasksFilterAC(todolistId, value));
+    }, [dispatch]);
 
-    function removeTodolist(id: string) {
+    const removeTodolist = useCallback((id: string) => {
         dispatch(removeTodolistAC(id));
-    }
+    }, [dispatch]);
 
-    const changeTaskTitle = (todolistID: string, taskID: string, title: string) => {
+    const changeTaskTitle = useCallback((todolistID: string, taskID: string, title: string) => {
         dispatch(changeTaskTitleAC(todolistID, taskID, title));
-    }
+    }, [dispatch]);
 
-    const changeTodolistTitle = (todolistID: string, title: string) => {
+    const changeTodolistTitle = useCallback((todolistID: string, title: string) => {
         dispatch(changeTodolistTitleAC(todolistID, title));
-    }
+    }, [dispatch]);
 
     return (
         <div className="App">
@@ -76,20 +76,20 @@ export const AppWithRedux = () => {
                         todolists.map((tl: TodolistType) => {
 
                             let allTodolistTasks = tasks[tl.id];
-                            let tasksForTodolist = allTodolistTasks;
-
-                            if (tl.filter === 'active') {
-                                tasksForTodolist = allTodolistTasks.filter(t => !t.isDone);
-                            }
-                            if (tl.filter === 'completed') {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
-                            }
+                            // let tasksForTodolist = allTodolistTasks;
+                            //
+                            // if (tl.filter === 'active') {
+                            //     tasksForTodolist = allTodolistTasks.filter(t => !t.isDone);
+                            // }
+                            // if (tl.filter === 'completed') {
+                            //     tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
+                            // }
 
                             return <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}} elevation={12}>
                                     <Todolist id={tl.id}
                                               title={tl.title}
-                                              tasks={tasksForTodolist}
+                                              tasks={allTodolistTasks}
                                               removeTask={removeTask}
                                               changeFilter={changeFilter}
                                               addTask={addTask}
