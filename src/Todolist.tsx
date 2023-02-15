@@ -32,7 +32,7 @@ export const Todolist = (props: PropsType) => {
     console.log('Todolist is rendered');
     const addTask = useCallback((newTitle: string) => {
         props.addTask(newTitle, props.id);
-    }, []);
+    }, [props.addTask, props.id]);
 
     const removeTodolist = () => props.removeTodolist(props.id)
 

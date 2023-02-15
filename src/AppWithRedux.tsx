@@ -34,15 +34,15 @@ export const AppWithRedux = () => {
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title));
-    }, []);
+    }, [dispatch]);
 
     function removeTask(todolistId: string, id: string) {
         dispatch(removeTaskAC(todolistId, id))
     }
 
-    function addTask(title: string, todolistId: string) {
+    const addTask = useCallback((title: string, todolistId: string) => {
         dispatch(addTaskAC(todolistId, title));
-    }
+    }, [dispatch]);
 
     function changeStatus(todolistId: string, id: string, isDone: boolean) {
         dispatch(changeTaskStatusAC(todolistId, id, isDone))
