@@ -4,8 +4,6 @@ import {EditableSpan} from "./components/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {TaskType} from "./Todolist";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "./reducers/store";
 
 type PropsType = {
     task: TaskType;
@@ -17,21 +15,21 @@ export const Task: React.FC<PropsType> = memo(({task, ...props}: PropsType) => {
 
     console.log('Task is rendered');
 
-    const onClickHandler = useCallback(() => props.removeTask(task.id), [props.removeTask]);
+    const onClickHandler = useCallback(() => props.removeTask(task.id), [props.removeTask, task.id]);
 
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         props.changeTaskStatus(task.id, e.currentTarget.checked);
-    }, [props.changeTaskStatus]);
+    }, [props.changeTaskStatus, task.id]);
 
     const callbackHandler = useCallback((title: string) => {
         props.changeTaskTitle(task.id, title)
-    }, [props.changeTaskTitle]);
+    }, [props.changeTaskTitle, task.id]);
 
     return (
         <li key={task.id} className={task.isDone ? 'is-done' : ''}>
             <Checkbox onChange={onChangeHandler} checked={task.isDone}/>
             <EditableSpan title={task.title}
-                          callback={(title) => callbackHandler(title)}/>
+                          callback={callbackHandler}/>
             <IconButton aria-label="delete" onClick={onClickHandler}>
                 <DeleteIcon/>
             </IconButton>

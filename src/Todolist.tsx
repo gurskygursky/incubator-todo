@@ -42,8 +42,8 @@ export const Todolist = memo((props: PropsType) => {
         props.changeTaskTitle(props.id, taskID, title);
     }, [props.changeTaskTitle, props.id]);
 
-    const changeTodolistTitle = useCallback((todolistID: string, title: string) => {
-        props.changeTodolistTitle(todolistID, title);
+    const changeTodolistTitle = useCallback((title: string) => {
+        props.changeTodolistTitle(props.id, title);
     }, [props.changeTodolistTitle]);
 
     const onAllClickHandler = () => props.changeFilter(props.id, 'all');
@@ -59,7 +59,8 @@ export const Todolist = memo((props: PropsType) => {
         tasks = tasks.filter(t => t.isDone);
     }
 
-    const removeTask = useCallback((taskId: string) => props.removeTask(taskId, props.id), [props.removeTask, props.id]);
+    const removeTask = useCallback((taskId: string) => props.removeTask(props.id, taskId), [props.removeTask, props.id]);
+
     const changeTaskStatus = useCallback((taskId: string, isDone: boolean) => {
         props.changeTaskStatus(props.id, taskId, isDone);
     }, [props.changeTaskStatus, props.id]);
@@ -67,7 +68,7 @@ export const Todolist = memo((props: PropsType) => {
 
     return <div>
         <h3>
-            <EditableSpan title={props.title} callback={(title) => changeTodolistTitle(props.id, title)}/>
+            <EditableSpan title={props.title} callback={changeTodolistTitle}/>
             <IconButton aria-label="delete" onClick={removeTodolist}>
                 <DeleteIcon/>
             </IconButton>
