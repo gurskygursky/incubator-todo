@@ -2,7 +2,6 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField/TextField';
 
-
 type PropsType = {
     callback: (title: string) => void;
 }
@@ -28,7 +27,7 @@ export const AddItemForm = (props: PropsType) => {
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
-        if (e.charCode === 13) {
+        if (e.key === 'Enter') {
             callbackHandler();
         }
     }
@@ -40,17 +39,11 @@ export const AddItemForm = (props: PropsType) => {
                        size={'small'}
                        value={title}
                        onChange={onChangeHandler}
-                       onKeyPress={onKeyPressHandler}
+                       onKeyDown={onKeyPressHandler}
                        error={!!error}
             />
-            {/*<input value={title}*/}
-            {/*       onChange={onChangeHandler}*/}
-            {/*       onKeyPress={onKeyPressHandler}*/}
-            {/*       className={error ? "error" : ""}*/}
-            {/*/>*/}
-            <Button variant="outlined" style={{minHeight: '40px', maxHeight: '40px'}}>+</Button>
-            {/*<button onClick={callbackHandler}>+</button>*/}
-            {/*{error && <div className="error-message">{error}</div>}*/}
+            <Button variant="outlined" style={{minHeight: '40px', maxHeight: '40px'}}
+                    onClick={callbackHandler}>+</Button>
         </div>
     );
 };

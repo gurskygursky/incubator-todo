@@ -33,16 +33,12 @@ export const EditableSpan = (props: PropsType) => {
     return (
         edit
             ? <TextField id="outlined-basic" label={'Enter task title'}
-                                     variant="outlined"
-                                     size={'small'}
-                                     value={title}
-                                     onChange={onChangeHandler}
-                                     onKeyPress={onKeyPressHandler}
+                         variant="outlined"
+                         size={'small'}
+                         value={title}
+                         onChange={onChangeHandler}
+                         onKeyDown={onKeyPressHandler}
             />
-            // ? <input type="text" value={title}
-            //          onChange={onChangeHandler}
-            //          onKeyDown={onKeyPressHandler}
-            //          onBlur={callbackHandler} autoFocus/>
             : <span onDoubleClick={editMode}>{props.title}</span>
     );
 };

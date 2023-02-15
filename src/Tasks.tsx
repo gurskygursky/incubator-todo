@@ -1,16 +1,14 @@
 import React, {ChangeEvent} from "react";
 import Checkbox from "@mui/material/Checkbox/Checkbox";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "./components/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {TaskType} from "./Todolist";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
-import {TasksStateType} from "./AppWithRedux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
 
 type PropsType = {
-    // tasks: Array<TaskType>;
+    tasks: Array<TaskType>;
     todolistId: string
     removeTask: (todolistId: string, taskId: string) => void;
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void;
@@ -28,15 +26,12 @@ export const Tasks = (props: PropsType) => {
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         let newIsDoneValue = e.currentTarget.checked;
                         props.changeTaskStatus(props.todolistId, t.id, newIsDoneValue);
-                        // props.changeTaskStatus(props.id, t.id, newIsDoneValue);
                     }
 
                     return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
                         <Checkbox onChange={onChangeHandler} checked={t.isDone}/>
-                        {/*<input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>*/}
-                        <EditableSpan title={t.title} callback={(title) => props.changeTaskTitle(props.todolistId, t.id, title)}/>
-                        {/*<span>{t.title}</span>*/}
-                        {/*<button onClick={onClickHandler}>x</button>*/}
+                        <EditableSpan title={t.title}
+                                      callback={(title) => props.changeTaskTitle(props.todolistId, t.id, title)}/>
                         <IconButton aria-label="delete" onClick={onClickHandler}>
                             <DeleteIcon/>
                         </IconButton>
@@ -44,5 +39,5 @@ export const Tasks = (props: PropsType) => {
                 })
             }
         </ul>
-    )
+    );
 };
