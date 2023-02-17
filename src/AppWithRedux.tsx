@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {todolistSelector} from "./reducers/selectors";
 import {AppRootStateType} from "./reducers/store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
+import {TodolistWithRedux} from "./TodolistWithRedux";
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistType = {
@@ -28,7 +29,7 @@ export const AppWithRedux = () => {
 
     console.log('AppWithRedux is rendered');
 
-    const todolists = useSelector(todolistSelector);
+    const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolistReducer);
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasksReducer);
     const dispatch = useDispatch();
 
@@ -87,18 +88,19 @@ export const AppWithRedux = () => {
 
                             return <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}} elevation={12}>
-                                    <Todolist id={tl.id}
-                                              title={tl.title}
-                                              tasks={allTodolistTasks}
-                                              removeTask={removeTask}
-                                              changeFilter={changeFilter}
-                                              addTask={addTask}
-                                              changeTaskStatus={changeStatus}
-                                              removeTodolist={removeTodolist}
-                                              filter={tl.filter}
-                                              changeTaskTitle={changeTaskTitle}
-                                              changeTodolistTitle={changeTodolistTitle}
-                                    />
+                                    <TodolistWithRedux todolist={tl} tasks={allTodolistTasks}/>
+                                    {/*<Todolist id={tl.id}*/}
+                                    {/*          title={tl.title}*/}
+                                    {/*          tasks={allTodolistTasks}*/}
+                                    {/*          removeTask={removeTask}*/}
+                                    {/*          changeFilter={changeFilter}*/}
+                                    {/*          addTask={addTask}*/}
+                                    {/*          changeTaskStatus={changeStatus}*/}
+                                    {/*          removeTodolist={removeTodolist}*/}
+                                    {/*          filter={tl.filter}*/}
+                                    {/*          changeTaskTitle={changeTaskTitle}*/}
+                                    {/*          changeTodolistTitle={changeTodolistTitle}*/}
+                                    {/*/>*/}
                                 </Paper>
                             </Grid>
                         })

@@ -1,5 +1,5 @@
 import React from 'react';
-import {TodolistType} from './AppWithRedux';
+import {TasksStateType, TodolistType} from './AppWithRedux';
 import {AddItemForm} from './components/AddItemForm';
 import {EditableSpan} from './components/EditableSpan';
 import IconButton from '@mui/material/IconButton';
@@ -11,6 +11,8 @@ import {changeTasksFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./re
 import {addTaskAC} from "./reducers/tasks-reducer";
 import {TasksWithRedux} from "./TasksWithRedux";
 import {tasksSelector} from "./reducers/selectors";
+import {Task} from "./Task";
+import {TaskWithRedux} from "./TaskWithRedux";
 
 export type TaskType = {
     id: string
@@ -20,12 +22,13 @@ export type TaskType = {
 
 type PropsType = {
     todolist: TodolistType;
+    tasks: TaskType[];
 }
 
-export const TodolistWithRedux = ({todolist}: PropsType) => {
+export const TodolistWithRedux = ({todolist, tasks}: PropsType) => {
 
     const {id, title, filter} = todolist;
-    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => tasksSelector(state, todolist.id));
+    // let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => tasksSelector(state, todolist.id));
     const dispatch = useDispatch();
 
     if (filter === 'active') {
@@ -58,7 +61,20 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
             </IconButton>
         </h3>
         <AddItemForm callback={addTask}/>
-        <TasksWithRedux todolistId={id} tasks={tasks}/>
+        <ul style={{listStyle: 'none', padding: 0}} key={todolist.id}>
+            {
+                tasks.map((task: TaskType) => {
+                    return (
+                        <TaskWithRedux task={task}
+                                       todolistId={todolist.id}
+                                       key={task.id}
+
+                        />
+                    )
+                })
+            }
+        </ul>
+        {/*<TasksWithRedux todolistId={id} tasks={tasks}/>*/}
         <div>
             <Button variant={filter === 'all' ? 'contained' : 'outlined'}
                     onClick={onAllClickHandler}>All</Button>
