@@ -20,13 +20,15 @@ export const TaskWithRedux: React.FC<PropsType> = memo(({todolistId, task}: Prop
     const dispatch = useDispatch();
 
     // const onClickHandler = useCallback(() => props.removeTask(task.id), [props.removeTask, task.id]);
-    const onClickHandler = dispatch(removeTaskAC(todolistId, task.id));
+    const onClickHandler = () => {
+        dispatch(removeTaskAC(todolistId, task.id));
+    }
     //
     // const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     //     props.changeTaskStatus(task.id, e.currentTarget.checked);
     // }, [props.changeTaskStatus, task.id]);
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-       dispatch(changeTaskStatusAC(todolistId, task.id, e.currentTarget.checked));
+        dispatch(changeTaskStatusAC(todolistId, task.id, e.currentTarget.checked));
     };
     //
     // const callbackHandler = useCallback((title: string) => {
@@ -41,8 +43,8 @@ export const TaskWithRedux: React.FC<PropsType> = memo(({todolistId, task}: Prop
             <Checkbox onChange={onChangeHandler} checked={task.isDone}/>
             <EditableSpan title={task.title}
                           callback={callbackHandler}/>
-            <IconButton aria-label="delete" onClick={() => {}}>
-                <DeleteIcon />
+            <IconButton aria-label="delete" onClick={onClickHandler}>
+                <DeleteIcon/>
             </IconButton>
         </li>
     );

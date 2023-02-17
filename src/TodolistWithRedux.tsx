@@ -1,5 +1,5 @@
 import React from 'react';
-import {TasksStateType, TodolistType} from './AppWithRedux';
+import {FilterValuesType, TasksStateType, TodolistType} from './AppWithRedux';
 import {AddItemForm} from './components/AddItemForm';
 import {EditableSpan} from './components/EditableSpan';
 import IconButton from '@mui/material/IconButton';
@@ -22,13 +22,12 @@ export type TaskType = {
 
 type PropsType = {
     todolist: TodolistType;
-    tasks: TaskType[];
 }
 
-export const TodolistWithRedux = ({todolist, tasks}: PropsType) => {
+export const TodolistWithRedux = ({todolist}: PropsType) => {
 
     const {id, title, filter} = todolist;
-    // let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => tasksSelector(state, todolist.id));
+    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => tasksSelector(state, todolist.id));
     const dispatch = useDispatch();
 
     if (filter === 'active') {
@@ -45,7 +44,7 @@ export const TodolistWithRedux = ({todolist, tasks}: PropsType) => {
     const removeTodolist = () => {
         dispatch(removeTodolistAC(id));
     }
-    const changeTodolistTitle = (todolistID: string, title: string) => {
+    const changeTodolistTitle = (title: string) => {
         dispatch(changeTodolistTitleAC(id, title));
     }
 
@@ -55,7 +54,7 @@ export const TodolistWithRedux = ({todolist, tasks}: PropsType) => {
 
     return <div>
         <h3>
-            <EditableSpan title={title} callback={(title) => changeTodolistTitle(todolist.id, title)}/>
+            <EditableSpan title={title} callback={changeTodolistTitle}/>
             <IconButton aria-label="delete" onClick={removeTodolist}>
                 <DeleteIcon/>
             </IconButton>
@@ -68,7 +67,6 @@ export const TodolistWithRedux = ({todolist, tasks}: PropsType) => {
                         <TaskWithRedux task={task}
                                        todolistId={todolist.id}
                                        key={task.id}
-
                         />
                     )
                 })

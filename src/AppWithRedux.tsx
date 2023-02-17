@@ -76,7 +76,7 @@ export const AppWithRedux = () => {
                     {
                         todolists.map((tl: TodolistType) => {
 
-                            let allTodolistTasks = tasks[tl.id];
+                            // let allTodolistTasks = tasks[tl.id];
                             // let tasksForTodolist = allTodolistTasks;
                             //
                             // if (tl.filter === 'active') {
@@ -88,7 +88,7 @@ export const AppWithRedux = () => {
 
                             return <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}} elevation={12}>
-                                    <TodolistWithRedux todolist={tl} tasks={allTodolistTasks}/>
+                                    <TodolistWithRedux todolist={tl}/>
                                     {/*<Todolist id={tl.id}*/}
                                     {/*          title={tl.title}*/}
                                     {/*          tasks={allTodolistTasks}*/}
