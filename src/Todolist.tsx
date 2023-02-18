@@ -11,14 +11,13 @@ import {addTaskAC} from "./reducers/tasks-reducer";
 import {tasksSelector} from "./selectors";
 import {Task} from "./Task";
 import {TaskType} from "./types";
-import {TodolistType} from "./types/TodolistType";
+import {TodolistType} from "./types";
 
 type PropsType = {
     todolist: TodolistType;
 }
 
 export const Todolist: React.FC<PropsType> = memo(({todolist}) => {
-
     const {id, title, filter} = todolist;
 
     let todolistTasks = useSelector<AppRootStateType, TaskType[]>(state => tasksSelector(state, todolist.id));

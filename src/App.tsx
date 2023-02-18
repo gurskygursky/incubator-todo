@@ -12,9 +12,6 @@ import {AppRootStateType} from "./reducers/store";
 import {TodolistType} from "./types";
 
 export const App = () => {
-
-    console.log('App is rendered');
-
     const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolistReducer);
     const dispatch = useDispatch();
 

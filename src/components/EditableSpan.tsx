@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField/TextField';
-import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 
 type PropsType = {
     title: string;
@@ -7,7 +7,6 @@ type PropsType = {
 }
 
 export const EditableSpan = memo((props: PropsType) => {
-    console.log('EditableSpan rendered');
 
     const [edit, setEdit] = useState<boolean>(false);
     const [title, setTitle] = useState<string>(props.title);
@@ -37,7 +36,9 @@ export const EditableSpan = memo((props: PropsType) => {
                          size={'small'}
                          value={title}
                          onChange={onChangeHandler}
-                         onKeyPress={onKeyPressHandler}
+                         onKeyDown={onKeyPressHandler}
+                         autoFocus={true}
+                         onBlur={callbackHandler}
             />
             : <span onDoubleClick={editMode}>{props.title}</span>
     );
