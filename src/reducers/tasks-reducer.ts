@@ -1,7 +1,7 @@
 import {AddTodolistType, RemoveTodolistType} from '../reducers/todolist-reducer';
-import {FilterValuesType, TasksStateType} from './../AppWithRedux';
-import {TaskType} from '../Todolist';
 import {v1} from 'uuid';
+import {TaskType} from './../types';
+import {TasksStateType} from "../types/";
 
 const initialState: TasksStateType = {};
 

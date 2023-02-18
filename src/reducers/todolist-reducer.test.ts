@@ -1,5 +1,4 @@
 import {v1} from 'uuid';
-import {TasksStateType, TodolistType} from '../AppWithRedux';
 import {
     addTodolistAC,
     changeTasksFilterAC,
@@ -8,10 +7,11 @@ import {
     todolistReducer
 } from './todolist-reducer';
 import {tasksReducer} from "../reducers/tasks-reducer";
+import {TasksStateType, TodolistType } from '../types';
 
 let todolistId1: string;
 let todolistId2: string;
-let startState: Array<TodolistType>;
+let startState: TodolistType[];
 
 beforeEach(() => {
     todolistId1 = v1();

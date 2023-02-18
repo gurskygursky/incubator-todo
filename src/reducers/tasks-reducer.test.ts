@@ -1,5 +1,4 @@
 import {v1} from 'uuid';
-import {TasksStateType} from '../AppWithRedux';
 import {
     addTaskAC,
     changeTaskStatusAC,
@@ -8,6 +7,7 @@ import {
     tasksReducer
 } from '../reducers/tasks-reducer';
 import {removeTodolistAC} from "../reducers/todolist-reducer";
+import {TasksStateType} from "../types";
 
 let todolistId1: string;
 let todolistId2: string;
