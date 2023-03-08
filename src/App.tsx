@@ -10,9 +10,10 @@ import {addTodolistAC} from './reducers/todolist-reducer';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
 import {TodolistType} from "./types";
+import {TodolistEntityType} from "./api/types";
 
 export const App = () => {
-    const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolistReducer);
+    const todolists = useSelector<AppRootStateType, TodolistEntityType[]>(state => state.todolistReducer);
     const dispatch = useDispatch();
 
     const addTodolist = useCallback((title: string) => {
@@ -28,7 +29,7 @@ export const App = () => {
                 </Grid>
                 <Grid container spacing={10}>
                     {
-                        todolists.map((tl: TodolistType) => {
+                        todolists.map((tl: TodolistEntityType) => {
 
                             return <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}} elevation={12}>

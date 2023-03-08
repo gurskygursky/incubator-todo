@@ -6,10 +6,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
 import { TaskType } from "./types";
+import {TaskResponseType} from "./api/types";
 
 type PropsType = {
     todolistId: string;
-    task: TaskType;
+    task: TaskResponseType;
 }
 export const Task: React.FC<PropsType> = memo(({todolistId, task}) => {
 
@@ -27,8 +28,8 @@ export const Task: React.FC<PropsType> = memo(({todolistId, task}) => {
     };
 
     return (
-        <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-            <Checkbox onChange={onChangeHandler} checked={task.isDone}/>
+        <li key={task.id} className={task.status ? 'is-done' : ''}>
+            <Checkbox onChange={onChangeHandler} checked={task.status}/>
             <EditableSpan title={task.title}
                           callback={callbackHandler}/>
             <IconButton aria-label="delete" onClick={onClickHandler}>

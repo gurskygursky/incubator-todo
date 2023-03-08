@@ -10,17 +10,18 @@ import {changeTasksFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./re
 import {addTaskAC} from "./reducers/tasks-reducer";
 import {tasksSelector} from "./selectors";
 import {Task} from "./Task";
-import {TaskType} from "./types";
+import {FilterValuesType, TaskType} from "./types";
 import {TodolistType} from "./types";
+import {TaskResponseType, TasksResponseType, TodolistEntityType} from "./api/types";
 
 type PropsType = {
-    todolist: TodolistType;
+    todolist: TodolistEntityType;
 }
 
 export const Todolist: React.FC<PropsType> = memo(({todolist}) => {
-    const {id, title, filter} = todolist;
+    const {id, title, filter, addedDate, order} = todolist;
 
-    let todolistTasks = useSelector<AppRootStateType, TaskType[]>(state => tasksSelector(state, todolist.id));
+    let todolistTasks = useSelector<AppRootStateType, TaskResponseType[]>(state => tasksSelector(state, todolist.id));
     const dispatch = useDispatch();
 
     if (filter === 'active') {
@@ -55,7 +56,7 @@ export const Todolist: React.FC<PropsType> = memo(({todolist}) => {
         <AddItemForm callback={addTask}/>
         <ul style={{listStyle: 'none', padding: 0}} key={todolist.id}>
             {
-                todolistTasks.map((task: TaskType) => {
+                todolistTasks.map((task: TasksResponseType) => {
                     return (
                         <Task task={task}
                               todolistId={todolist.id}
