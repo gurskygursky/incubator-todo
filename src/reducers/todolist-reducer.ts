@@ -1,6 +1,9 @@
 import {v1} from 'uuid';
 import {FilterValuesType, TodolistType} from "../types";
-import {TodolistEntityType, TodolistResponseType} from "./../api/types";
+import {ResponseType, TodolistEntityType, TodolistResponseType} from "./../api/types";
+import {AppRootStateType} from "./../reducers/store";
+import {todolistAPI} from "./../api/API";
+import { ThunkAction } from 'redux-thunk';
 
 const initialState: TodolistEntityType[] = [];
 
@@ -21,6 +24,8 @@ export const todolistReducer = (state = initialState, action: ActionType): Todol
             return state.map(td => td.id === action.payload.todolistId ? {...td, filter: action.payload.filter} : td);
         case 'CHANGE_TODOLIST_TITLE':
             return state.map(td => td.id === action.payload.todolistId ? {...td, title: action.payload.title} : td);
+        case 'GET_LISTS':
+            return [...state]
         default:
             return state
     }
@@ -62,10 +67,30 @@ export const changeTasksFilterAC = (todolistId: string, filter: FilterValuesType
         }
     } as const
 }
+export const getListsAC = (items: TodolistResponseType[]) => {
+    return {
+        type: 'GET_LISTS',
+        payload: {items}
+    } as const
+}
+
+export const getListsThunk = (): ThunkAction<Promise<void>, AppRootStateType, unknown, ActionType> =>
+    (dispatch) => {
+        return todolistAPI.getLists()
+            .then((data: ResponseType<TodolistResponseType[]>) => {
+                if (data.resultCode === 0) {
+                    console.log(data.data)
+                    dispatch(getListsAC(data.data));
+                }
+            })
+
+    }
 
 export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
 type ChangeTodolistTitleType = ReturnType<typeof changeTodolistTitleAC>
 export type AddTodolistType = ReturnType<typeof addTodolistAC>
 type ChangeTasksFilterActionType = ReturnType<typeof changeTasksFilterAC>;
+type GetListsActionType = ReturnType<typeof getListsAC>;
 
-export type ActionType = RemoveTodolistType | ChangeTodolistTitleType | AddTodolistType | ChangeTasksFilterActionType;
+export type ActionType = RemoveTodolistType | ChangeTodolistTitleType | AddTodolistType| ChangeTasksFilterActionType
+    | GetListsActionType;

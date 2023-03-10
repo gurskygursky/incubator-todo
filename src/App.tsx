@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {ButtonAppBar} from './components/app-bar/ButtonAppBar';
@@ -6,7 +6,7 @@ import {AddItemForm} from './components/AddItemForm';
 import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
-import {addTodolistAC} from './reducers/todolist-reducer';
+import {addTodolistAC, getListsThunk} from './reducers/todolist-reducer';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
 import {TodolistType} from "./types";
