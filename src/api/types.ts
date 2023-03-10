@@ -33,21 +33,15 @@ export enum TaskPriorities {
 }
 
 export type TaskResponseType = {
-    description: Nullable<string>;
+    description: string;
     title: string;
     completed: boolean;
     status: TaskStatuses;
     priority: TaskPriorities;
-    startDate: string;
-    deadline: string;
+    startDate: Nullable<string>;
+    deadline: Nullable<string>;
     id: string;
     todoListId: string;
     order: Nullable<number>;
-    addedDate: string;
+    addedDate: Nullable<string>;
 }
-
-export type TasksResponseType = {
-    items: Array<TaskResponseType>;
-    totalCount: Nullable<number>;
-    error: Nullable<string>;
-};

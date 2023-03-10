@@ -1,6 +1,5 @@
-import {TaskType} from "../types/TaskType";
-import {TasksResponseType} from "./../api/types";
+import {TaskResponseType} from "./../api/types";
 
 export type TasksStateType = {
-    [key: string]: TasksResponseType[]
+    [key: string]: TaskResponseType[]
 }

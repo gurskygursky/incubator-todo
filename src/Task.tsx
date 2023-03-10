@@ -5,8 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
-import { TaskType } from "./types";
-import {TaskResponseType} from "./api/types";
+import {TaskResponseType, TaskStatuses} from "./api/types";
 
 type PropsType = {
     todolistId: string;
@@ -21,7 +20,7 @@ export const Task: React.FC<PropsType> = memo(({todolistId, task}) => {
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeTaskStatusAC(todolistId, task.id, e.currentTarget.checked));
+        dispatch(changeTaskStatusAC(todolistId, task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New));
     };
     const callbackHandler = (title: string) => {
         dispatch(changeTaskTitleAC(todolistId, task.id, title));
@@ -29,7 +28,7 @@ export const Task: React.FC<PropsType> = memo(({todolistId, task}) => {
 
     return (
         <li key={task.id} className={task.status ? 'is-done' : ''}>
-            <Checkbox onChange={onChangeHandler} checked={task.status}/>
+            <Checkbox onChange={onChangeHandler} checked={task.status === TaskStatuses.Completed}/>
             <EditableSpan title={task.title}
                           callback={callbackHandler}/>
             <IconButton aria-label="delete" onClick={onClickHandler}>

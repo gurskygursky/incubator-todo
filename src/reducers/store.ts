@@ -1,5 +1,5 @@
-import { tasksReducer } from './tasks-reducer'
-import { todolistReducer } from './todolist-reducer'
+import {tasksReducer} from './tasks-reducer'
+import {todolistReducer} from './todolist-reducer'
 import {combineReducers, legacy_createStore} from 'redux'
 
 // объединяя reducer-ы с помощью combineReducers,
