@@ -1,11 +1,11 @@
-import {AddTodolistType, RemoveTodolistType} from '../reducers/todolist-reducer';
+import {AddTodolistType, GetListsActionType, RemoveTodolistType} from '../reducers/todolist-reducer';
 import {v1} from 'uuid';
 import {TasksStateType} from "../types/";
 import {TaskPriorities, TaskResponseType, TaskStatuses} from "./../api/types";
 
 const initialState: TasksStateType = {};
 
-export const tasksReducer = (state = initialState, action: ActionsType | AddTodolistType | RemoveTodolistType): TasksStateType => {
+export const tasksReducer = (state = initialState, action: ActionsType | AddTodolistType | RemoveTodolistType | GetListsActionType): TasksStateType => {
     switch (action.type) {
         case 'ADD_TODOLIST':
             return {...state, [action.payload.todolistID]: []}
@@ -53,6 +53,13 @@ export const tasksReducer = (state = initialState, action: ActionsType | AddTodo
 
             // let {[action.payload.todolistId]: [], ...rest} = {...state}
             //     return rest
+        }
+        case 'GET_LISTS': {
+            const copyState = {...state};
+            action.payload.items.forEach(todolist => {
+                copyState[todolist.id] = [];
+            })
+            return copyState;
         }
         default:
             return state

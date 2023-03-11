@@ -6,15 +6,22 @@ import {AddItemForm} from './components/AddItemForm';
 import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
-import {addTodolistAC, getListsThunk} from './reducers/todolist-reducer';
+import {addTodolistAC, getListsAC} from './reducers/todolist-reducer';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
-import {TodolistType} from "./types";
 import {TodolistEntityType} from "./api/types";
+import {todolistAPI} from "./api/API";
 
 export const App = () => {
     const todolists = useSelector<AppRootStateType, TodolistEntityType[]>(state => state.todolistReducer);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        todolistAPI.getLists()
+            .then(response => {
+                dispatch(getListsAC(response));
+            })
+    }, []);
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title));
