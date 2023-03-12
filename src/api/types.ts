@@ -6,7 +6,7 @@ export type TodolistResponseType = {
     addedDate: Nullable<string>;
     order: Nullable<number>;
 }
-export type TodolistEntityType = TodolistResponseType & {filter: FilterValuesType};
+export type TodolistEntityType = TodolistResponseType & { filter: FilterValuesType };
 
 export type ResponseType<T = {}> = {
     resultCode: number
@@ -18,11 +18,12 @@ export type ResponseType<T = {}> = {
 export type Nullable<T> = T | null;
 
 export enum TaskStatuses {
-    New ,
+    New,
     InProgress,
     Completed,
     Draft,
 }
+
 export enum TaskPriorities {
     Low,
     Middle,
@@ -44,4 +45,19 @@ export type TaskResponseType = {
     todoListId: string;
     order: Nullable<number>;
     addedDate: Nullable<string>;
+}
+
+export type UpdateTaskModelType = {
+    title: string;
+    description: string;
+    status: TaskStatuses;
+    priority: TaskPriorities;
+    startDate: string;
+    deadline: string;
+}
+
+export type GetTasksResponseType = {
+    items: TaskResponseType[],
+    totalCount: number,
+    error: string,
 }
